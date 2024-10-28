@@ -15,6 +15,7 @@ import defaultStates from "./utils/defaultStates";
 import FiveDayForecast from "./Components/FiveDayForecast/FiveDayForecast";
 import { useGlobalContextUpdate } from "./context/globalContext"; 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 
 const DynamicMapbox = dynamic(

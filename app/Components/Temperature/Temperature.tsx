@@ -18,7 +18,7 @@ function Temperature() {
   const { main, timezone, name, weather } = forecast;
 
   if (!forecast || !weather) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   const temp = kelvinToCelsius(main?.temp);

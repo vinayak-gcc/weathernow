@@ -59,7 +59,7 @@ function UvIndex() {
       <div className="top">
         <h2 className="flex items-center gap-2 font-medium">{sun} Uv Index</h2>
         <div className="pt-4 flex flex-col gap-1">
-          <p className="text-2xl">
+          <p className="text-2xl aria-[UV index]:">
             {uvIndexMax}
             <span className="text-sm">
               ({uvIndexCategory(uvIndexMax).text})
@@ -67,6 +67,7 @@ function UvIndex() {
           </p>
 
           <UvProgress
+          
             value={marginLeftPercentage}
             max={14}
             className="progress"

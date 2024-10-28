@@ -23,7 +23,7 @@ export default function Error({
           () => reset()
         }
       >
-        Try again
+        <div className='text-5xl'>Try again</div>
       </button>
     </div>
   )
