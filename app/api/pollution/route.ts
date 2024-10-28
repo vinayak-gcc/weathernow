@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic'
+
+
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,7 +18,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(res.data);
   } catch (error) {
-    console.log("Error in getting pollusion data ", error);
+    console.log("Error in getting pollution data ", error);
     return new Response("Error fetching pollution data", { status: 500 });
   }
 }
