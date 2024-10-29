@@ -12,11 +12,11 @@ import UvIndex from "./Components/UvIndex/UvIndex";
 import Visibility from "./Components/Visibility/Visibility";
 import Wind from "./Components/Wind/Wind";
 import defaultStates from "./utils/defaultStates";
-import FiveDayForecast from "./Components/FiveDayForecast/FiveDayForecast";
 import { useGlobalContextUpdate } from "./context/globalContext"; 
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import { lazy } from "react";
 
+const FiveDayForecast = lazy(() =>  import("./Components/FiveDayForecast/FiveDayForecast"));
 
 const DynamicMapbox = dynamic(
   ()=>import ('./Components/Mapbox/Mapbox'), 

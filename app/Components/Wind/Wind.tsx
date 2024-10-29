@@ -44,7 +44,7 @@ function Wind() {
         </div>
         <p
           className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] text-xs
-            dark:text-white font-medium"
+            dark:text-white font-medium "
         >
           {Math.round(windSpeed)} m/s
         </p>
