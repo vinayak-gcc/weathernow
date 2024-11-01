@@ -35,6 +35,13 @@
     --radius: 0.5rem;
   }
 
+  @layer base {
+    img {
+        width: auto;
+        height: auto;
+    }
+}
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -83,6 +90,7 @@ body::-webkit-scrollbar-track {
   background: #1d1c1c;
 }
 
+
 body::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 20px;
@@ -108,14 +116,6 @@ body::-webkit-scrollbar-thumb:hover {
   background-image: linear-gradient(to right, #00dfff 0%, #00f9ff 20%, yellow);
 }
 
-.footer-text > img {
-  filter: grayscale(100%);
-  transition: filter 0.3s ease-in-out;
-}
-
-footer:hover .footer-text > img {
-  filter: grayscale(0%);
-}
 
 @media screen and (max-width: 581px) {
   .btn-group {
@@ -141,9 +141,6 @@ footer:hover .footer-text > img {
     width: 100%;
   }
 
-  .source-code-btn {
-    order: -1;
-  }
 }
 
 @media screen and (max-width: 1010px) {

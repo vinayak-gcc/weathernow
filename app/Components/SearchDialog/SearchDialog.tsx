@@ -3,30 +3,52 @@ import {
   useGlobalContext,
   useGlobalContextUpdate,
 } from "@/app/context/globalContext";
-import { commandIcon } from "@/app/utils/Icons";
+import { useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Command, CommandInput } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import React from "react";
 
 function SearchDialog() {
+
   const { geoCodedList, inputValue, handleInput } = useGlobalContext();
   const { setActiveCityCoords } = useGlobalContextUpdate();
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event:KeyboardEvent) => {
+
+      if (event.key == '/') {
+        searchInputRef.current.focus() 
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+  
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const [hoveredIndex, setHoveredIndex] = React.useState<number>(0);
 
   const getClickedCoords = (lat: number, lon: number) => {
     setActiveCityCoords([lat, lon]);
+
   };
+
+  
   return (
     <div className="search-btn">
       <Dialog>
-        <DialogTrigger asChild>
+        <DialogTrigger asChild 
+         ref={searchInputRef} 
+>
           <Button
             variant="outline"
-            className="border inline-flex items-center justify-center text-sm font-medium hover:dark:bg-[#131313] hover:bg-slate-100  ease-in-out duration-200"
+            className="border inline-flex items-center justify-center text-sm font-medium hover:dark:bg-[#131313]
+             hover:bg-slate-100  ease-in-out duration-200"
+
           >
-            <p className="text-sm text-muted-foreground mr-12">Search Here...</p>
+            <p className="text-sm  text-muted-foreground ">Click Here or Press ' / + Enter '</p>
           </Button>
         </DialogTrigger>
 
@@ -36,6 +58,8 @@ function SearchDialog() {
               value={inputValue}
               onChangeCapture={handleInput}
               placeholder="Type a command or search..."
+              ref={searchInputRef} 
+
             />
             <ul className="px-3 pb-2">
               <p className="p-2 text-sm text-muted-foreground">Suggestions</p>

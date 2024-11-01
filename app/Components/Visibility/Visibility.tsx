@@ -8,7 +8,7 @@ function Visibility() {
   const { forecast } = useGlobalContext();
 
   if (!forecast || !forecast?.visibility) {
-    return <Skeleton className="h-[12rem] w-full" />;
+    return <Skeleton className="h-[12rem] w-full md:w-[10.5rem]" />;
   }
 
   const { visibility } = forecast;

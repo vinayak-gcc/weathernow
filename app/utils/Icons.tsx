@@ -1,6 +1,5 @@
 import {
   Command,
-  Github,
   Search,
   CloudDrizzle,
   CloudRain,
@@ -21,7 +20,6 @@ import {
 } from "lucide-react";
 
 export const commandIcon = <Command size={14} />;
-export const github = <Github size={20} />;
 export const searchIcon = <Search />;
 export const drizzleIcon = <CloudDrizzle size={25} />;
 export const rain = <CloudRain size={30} />;

@@ -18,11 +18,11 @@ function DailyForecast() {
   const { city, list } = fiveDayForecast;
 
   if (!fiveDayForecast || !city || !list) {
-    return <Skeleton className="h-[12rem] w-full" />;
+    return <Skeleton className="h-[12rem] w-full md:w-[21rem] col-span-2" />;
   }
 
   if (!forecast || !weather) {
-    return <Skeleton className="h-[12rem] w-full" />;
+    return <Skeleton className="" />;
   }
 
   const today = new Date();
@@ -67,7 +67,7 @@ function DailyForecast() {
     >
       <div className="h-full flex gap-10 overflow-hidden">
         {todaysForecast.length < 1 ? (
-          <div className="flex justify-center items-ce  nter">
+          <div className="flex justify-center items-center">
             <h1 className="text-[3rem] line-through text-rose-500">
               No Data Available!
             </h1>

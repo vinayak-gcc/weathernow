@@ -8,7 +8,7 @@ function Pressure() {
   const { forecast } = useGlobalContext();
 
   if (!forecast || !forecast?.main || !forecast?.main?.pressure) {
-    return <Skeleton className="h-[12rem] w-full" />;
+    return <Skeleton className="h-[12rem] w-full md:w-[10rem]" />;
   }
 
   const { pressure } = forecast?.main;

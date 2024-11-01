@@ -11,15 +11,14 @@ import {
 } from "@/app/utils/Icons";
 import { kelvinToCelsius } from "@/app/utils/misc";
 import moment from "moment";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Temperature() {
   const { forecast } = useGlobalContext();
 
   const { main, timezone, name, weather } = forecast;
 
-  if (!forecast || !weather) {
-    return <div></div>;
-  }
+
 
   const temp = kelvinToCelsius(main?.temp);
   const minTemp = kelvinToCelsius(main?.temp_min);
@@ -29,7 +28,7 @@ function Temperature() {
   const [localTime, setLocalTime] = useState<string>("");
   const [currentDay, setCurrentDay] = useState<string>("");
 
-  const { main: weatherMain, description } = weather[0];
+
 
   const getIcon = () => {
     switch (weatherMain) {
@@ -66,9 +65,15 @@ function Temperature() {
     return () => clearInterval(interval);
   }, [timezone]);
 
+  if (!weather) {
+    return <Skeleton className="h-[26rem] w-[24rem]"></Skeleton>;
+  }
+
+  const { main: weatherMain, description } = weather[0];
+
   return (
     <div
-      className="pt-6 pb-5 px-4 border rounded-lg flex flex-col 
+      className="pt-6 pb-5 px-4 border rounded-lg flex flex-col h-[25.5rem]
         justify-between dark:bg-dark-grey shadow-sm dark:shadow-none"
     >
       <p className="flex justify-between items-center">
@@ -79,7 +84,7 @@ function Temperature() {
         <span>{name}</span>
         <span>{navigation}</span>
       </p>
-      <p className="py-10 text-9xl font-bold self-center">{temp}°</p>
+      <p className="py-10 font-bold text-6xl md:text-9xl self-center">{temp}°</p>
 
       <div>
         <div>

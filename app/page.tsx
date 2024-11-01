@@ -11,10 +11,10 @@ import Temperature from "./Components/Temperature/Temperature";
 import UvIndex from "./Components/UvIndex/UvIndex";
 import Visibility from "./Components/Visibility/Visibility";
 import Wind from "./Components/Wind/Wind";
-import defaultStates from "./utils/defaultStates";
 import { useGlobalContextUpdate } from "./context/globalContext"; 
 import dynamic from "next/dynamic";
 import { lazy } from "react";
+import Topcities from "./utils/Topcities";
 
 const FiveDayForecast = lazy(() =>  import("./Components/FiveDayForecast/FiveDayForecast"));
 
@@ -39,15 +39,15 @@ export default function Home() {
   };
 
   return (
-    <main className="mx-[1rem] lg:mx-[2rem] xl:mx-[6rem] 2xl:mx-[16rem] m-auto my-4">
+    <main className="mx-[1rem] box-border lg:mx-[2rem] overflow-hidden xl:mx-[6rem] 2xl:mx-[16rem] m-auto my-4">
       <Navbar />
       <div className="pb-4 flex flex-col gap-4 md:flex-row">
-        <div className="flex flex-col gap-4 w-full min-w-[18rem] md:w-[35rem]">
+        <div className="flex flex-col gap-4 w-full  md:w-[35rem]">
           <Temperature />
           <FiveDayForecast />
         </div>
         <div className="flex flex-col w-full">
-          <div className="instruments grid h-full gap-4 col-span-full sm-2:col-span-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid h-full col-span-full gap-x-4 gap-y-3 box-border sm-2:col-span-2 lg:grid-cols-3 xl:grid-cols-4">
             <AirPollution />
             <Sunset />
             <Wind />
@@ -61,26 +61,8 @@ export default function Home() {
           </div>
           <div className="mapbox-con mt-4 flex gap-4">
             <DynamicMapbox />
-            <div className="states flex flex-col gap-3 flex-1">
-              <h2 className="flex items-center gap-2 font-medium">
-                Top Large Cities
-              </h2>
-              <div className="flex flex-col gap-4">
-                {defaultStates.map((state, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="border rounded-lg cursor-pointer dark:bg-dark-grey shadow-sm dark:shadow-none"
-                      onClick={() => {
-                        getClickedCityCords(state.lat, state.lon);
-                      }}
-                    >
-                      <p className="px-6 py-4 ">{state.name}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <Topcities />
+
           </div>
         </div>
       </div>

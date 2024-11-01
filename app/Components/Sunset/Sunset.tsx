@@ -9,7 +9,7 @@ function Sunset() {
   const { forecast } = useGlobalContext();
 
   if (!forecast || !forecast?.sys || !forecast?.sys?.sunset) {
-    return <Skeleton className="h-[12rem] w-full" />;
+    return <Skeleton className="h-[12rem] w-full md:w-[10.5rem]" />;
   }
 
   const times = forecast?.sys?.sunset;
@@ -17,7 +17,6 @@ function Sunset() {
 
   const sunsetTime = unixToTime(times, timezone);
   const sunrise = unixToTime(forecast?.sys?.sunrise, timezone);
-  console.log(sunsetTime, 'sunseTime')
 
   return (
     <div className="pt-6 pb-5 px-4 h-[12rem] border rounded-lg flex flex-col gap-8 dark:bg-dark-grey shadow-sm dark:shadow-none">

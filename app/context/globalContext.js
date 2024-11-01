@@ -83,11 +83,14 @@ export const GlobalContextProvider = ({ children }) => {
     }
   };
 
+  //  handle search by / 
+
+
   // debounce function
   useEffect(() => {
     const debouncedFetch = debounce((search) => {
       fetchGeoCodedList(search);
-    }, 500);
+    }, 400);
 
     if (inputValue) {
       debouncedFetch(inputValue);
@@ -95,7 +98,7 @@ export const GlobalContextProvider = ({ children }) => {
 
     // cleanup
     return () => debouncedFetch.cancel();
-  }, [inputValue]);
+  }, [inputValue ]);
 
   useEffect(() => {
     fetchForecast(activeCityCoords[0], activeCityCoords[1]);
