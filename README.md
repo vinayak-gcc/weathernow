@@ -5,6 +5,8 @@ This Project is made from Next.js about Weather Forecasting which shows the curr
 you can get it here <https://home.openweathermap.org/api_keys>
 
 After making a account and generating a key just add it to your .env file like this :
-OPENWEATHERMAP_API_KEY = 'YOUR_API_KEY'  and you are good to go.
+OPENWEATHERMAP_API_KEY = 'YOUR_API_KEY' and you are good to go. Below is an Image of the application.
+
+![alt text](public/Screenshot.png)
 
 Thanks for reading till this far. if u have any queries than you can ask me here and if you have any suggestions, kindly suggest me and help me in improving the website and my resume too. Thanks.

@@ -18,10 +18,10 @@ function Navbar() {
 
         <div className="btn-group flex items-center gap-2">
           <ThemeDropdown />
-
-
         </div>
+
       </div>
+      
     </div>
   );
 }

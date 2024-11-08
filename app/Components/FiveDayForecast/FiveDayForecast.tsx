@@ -11,7 +11,7 @@ function FiveDayForecast() {
   const { city, list } = fiveDayForecast;
 
   if (!fiveDayForecast || !city || !list) {
-    return <Skeleton className="h-[39rem] w-[24rem]" />;
+    return <Skeleton className="h-[39rem] w-full md:w-[24rem]" />;
   }
 
   const processData = (
@@ -50,8 +50,8 @@ function FiveDayForecast() {
 
   return (
     <div
-      className="pt-6 pb-5 px-4 flex-1 border rounded-lg inline-block  flex-col
-        justify-between dark:bg-dark-grey shadow-sm dark:shadow-none"
+      className="pt-6 pb-5 px-4 flex-1 border rounded-lg inline-block flex-col
+        justify-between dark:bg-dark-grey shadow-sm dark:shadow-none" 
     >
       <div>
         <h2 className="flex items-center gap-2 font-medium">
@@ -66,7 +66,7 @@ function FiveDayForecast() {
                 className="daily-forecast py-4 flex flex-col justify-evenly border-b-2"
               >
                 <p className="text-xl min-w-[3.5rem]">{day.day}</p>
-                <p className="text-sm flex justify-between">
+                <p className="text-sm flex justify-between mb-0 mt-0 md:mb-4 md:mt-4 lg:mt-0 lg:mb-0">
                   <span>(low)</span>
                   <span>(high)</span>
                 </p>

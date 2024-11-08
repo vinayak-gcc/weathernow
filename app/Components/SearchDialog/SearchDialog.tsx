@@ -19,7 +19,7 @@ function SearchDialog() {
     const handleKeyDown = (event:KeyboardEvent) => {
 
       if (event.key == '/') {
-        searchInputRef.current.focus() 
+        searchInputRef.current.click()
       }
     };
   
@@ -45,8 +45,8 @@ function SearchDialog() {
           <Button
             variant="outline"
             className="border inline-flex items-center justify-center text-sm font-medium hover:dark:bg-[#131313]
-             hover:bg-slate-100  ease-in-out duration-200"
-
+             hover:bg-slate-100  ease-in-out duration-200 "
+             ref={searchInputRef} 
           >
             <p className="text-sm  text-muted-foreground ">Click Here or Press ' / + Enter '</p>
           </Button>
@@ -58,7 +58,6 @@ function SearchDialog() {
               value={inputValue}
               onChangeCapture={handleInput}
               placeholder="Type a command or search..."
-              ref={searchInputRef} 
 
             />
             <ul className="px-3 pb-2">

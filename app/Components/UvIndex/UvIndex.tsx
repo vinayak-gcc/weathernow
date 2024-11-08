@@ -10,7 +10,7 @@ function UvIndex() {
   const { uvIndex } = useGlobalContext();
 
   if (!uvIndex || !uvIndex.daily) {
-    return <Skeleton className="h-[12rem] w-full md:w-[10.5rem]" />;
+    return <Skeleton className="h-[12rem] w-full lg::w-[10.5rem]" />;
   }
 
   const { daily } = uvIndex;
@@ -71,6 +71,7 @@ function UvIndex() {
             value={marginLeftPercentage}
             max={14}
             className="progress"
+            aria-label="uv index"
           />
         </div>
       </div>

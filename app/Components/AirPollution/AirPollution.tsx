@@ -17,7 +17,7 @@ function AirPollution() {
     !airQuality.list[0].main
   ) {
     return (
-      <Skeleton className="h-[12rem] md:w-[21rem] col-span-2 " />
+      <Skeleton className="h-[12rem] w-full lg::w-[21rem] col-span-2 " />
     );
   }
 
@@ -35,7 +35,7 @@ function AirPollution() {
       <h2 className="flex items-center gap-2 font-medium">
         {thermo}Air Pollution
       </h2>
-      <Progress value={airQualityIndex} max={100} className="progress aria-[Air-pollution-progress]" />
+      <Progress value={airQualityIndex} max={100} className="progress" aria-label="air pollution index" />
       <p className="text-sm">Air quality is {filteredIndex?.description}. </p>
     </div>
   );

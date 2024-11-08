@@ -143,13 +143,3 @@ body::-webkit-scrollbar-thumb:hover {
 
 }
 
-@media screen and (max-width: 1010px) {
-  .mapbox-con {
-    flex-direction: column;
-  }
-
-  .mapbox-con > div:first-child {
-    height: 24rem;
-    flex: initial;
-  }
-}

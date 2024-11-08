@@ -5,6 +5,8 @@ import * as ProgressPrimitive from "@radix-ui/react-progress";
 
 import { cn } from "@/lib/utils";
 
+
+
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
@@ -12,18 +14,21 @@ const Progress = React.forwardRef<
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
-      "relative box-border h-3 overflow-hidden rounded-full bg-secondary",
+      "progress relative ox-border h-3  min-w-[10rem] overflow-hidden rounded-full bg-secondary",
       className
     )}
     {...props}
   >
     <ProgressPrimitive.Indicator
       className="h-3 w-3 flex-1 rounded-full bg-primary shadow-lg shadow-white ring-2
-       dark:ring-gray-500 aria-[Progress bar] :"
+       dark:ring-gray-500 "
+
       style={{ marginLeft: `calc(${value}% - 0.8rem)` }}
     />
   </ProgressPrimitive.Root>
 ));
 Progress.displayName = ProgressPrimitive.Root.displayName;
 
+
 export { Progress };
+

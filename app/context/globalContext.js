@@ -1,4 +1,7 @@
 "use Client";
+
+export const revalidate = 0;
+
 import axios from "axios";
 import React, { useContext, createContext, useState, useEffect } from "react";
 import defaultStates from "../utils/defaultStates";
@@ -9,12 +12,14 @@ const GlobalContext = createContext();
 const GlobalContextUpdate = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
+  
   const [forecast, setForecast] = useState({});
   const [geoCodedList, setGeoCodedList] = useState(defaultStates);
   const [inputValue, setInputValue] = useState("");
+  
 
   const [activeCityCoords, setActiveCityCoords] = useState([
-    22.3072, 73.1812,
+    22.3072 , 73.1807
   ]);
 
   const [airQuality, setAirQuality] = useState({});
@@ -83,14 +88,11 @@ export const GlobalContextProvider = ({ children }) => {
     }
   };
 
-  //  handle search by / 
-
-
   // debounce function
   useEffect(() => {
     const debouncedFetch = debounce((search) => {
       fetchGeoCodedList(search);
-    }, 400);
+    }, 300);
 
     if (inputValue) {
       debouncedFetch(inputValue);
@@ -98,7 +100,8 @@ export const GlobalContextProvider = ({ children }) => {
 
     // cleanup
     return () => debouncedFetch.cancel();
-  }, [inputValue ]);
+
+  }, [inputValue]);
 
   useEffect(() => {
     fetchForecast(activeCityCoords[0], activeCityCoords[1]);

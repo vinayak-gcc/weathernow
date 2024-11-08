@@ -10,7 +10,7 @@ function Population() {
   const { city } = fiveDayForecast;
 
   if (!fiveDayForecast || !city) {
-    return <Skeleton className="h-[12rem] w-[10 rem]" />;
+    return <Skeleton className="h-[12rem] w-full lg:w-[10 rem]" />;
   }
 
   return (

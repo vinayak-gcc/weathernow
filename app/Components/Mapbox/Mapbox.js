@@ -34,12 +34,12 @@ function Mapbox() {
 
   if (!forecast || !forecast.coord ) {
     return (
-    <Skeleton className="h-[40rem] w-[44rem]"></Skeleton>
+    <Skeleton className="h-[20rem] w-full md:w-[21.5rem]"></Skeleton>
     );
   }
 
   return (
-    <div className="flex-1 basis-[50%] border rounded-lg">
+    <div className="flex-1 basis-[50%] h-[24rem] border rounded-lg">
       <MapContainer
         center={[activeCityCords.lat, activeCityCords.lon]}
         zoom={44}

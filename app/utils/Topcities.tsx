@@ -1,7 +1,6 @@
 import defaultStates from "@/app/utils/defaultStates";
 import { useGlobalContextUpdate } from "../context/globalContext"; 
 
-
 function Topcities() {
 
     const { setActiveCityCoords } = useGlobalContextUpdate();
@@ -17,7 +16,7 @@ function Topcities() {
     };
 
     return(
-        <div className="states flex-1 flex-col gap-3 ">
+        <div className="flex-1 flex-col gap-3 ">
               <h2 className="flex items-center gap-2 font-medium">
                 Top Large Cities
               </h2>

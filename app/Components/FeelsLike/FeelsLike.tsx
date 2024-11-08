@@ -9,7 +9,7 @@ function FeelsLike() {
   const { forecast } = useGlobalContext();
 
   if (!forecast || !forecast?.main || !forecast?.main?.feels_like) {
-    return <Skeleton className="h-[12rem] w-full md:w-[10.5rem]" />;
+    return <Skeleton className="h-[12rem] w-full lg:w-[10rem]" />;
   }
 
   const { feels_like, temp_min, temp_max } = forecast?.main;
