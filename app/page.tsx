@@ -10,7 +10,6 @@ import Navbar from "./Components/Navbar";
 import Population from "./Components/Population/Population";
 import Pressure from "./Components/Pressure/Pressure";
 import Sunset from "./Components/Sunset/Sunset";
-import Temperature from "./Components/Temperature/Temperature";
 import UvIndex from "./Components/UvIndex/UvIndex";
 import Visibility from "./Components/Visibility/Visibility";
 import Wind from "./Components/Wind/Wind";
@@ -23,6 +22,8 @@ import Topcities from "./utils/Topcities";
 
 const FiveDayForecast = lazy(() =>  import("./Components/FiveDayForecast/FiveDayForecast"));
 
+const DynamicTemperature = dynamic(()=> import('./Components/Temperature/Temperature'))
+
 const DynamicMapbox = dynamic(()=>import ('./Components/Mapbox/Mapbox'), 
   {  
   ssr:false,
@@ -32,19 +33,19 @@ const DynamicMapbox = dynamic(()=>import ('./Components/Mapbox/Mapbox'),
 export default function Home() {
 
   return (
-    <main className="mx-[1rem] box-border lg:mx-[2rem] overflow-hidden xl:mx-[6rem] 2xl:mx-[16rem] m-auto my-4">
+    <main className="mx-[1rem] min-w-[14rem] box-border lg:mx-[2rem] overflow-hidden xl:mx-[6rem] 2xl:mx-[16rem] m-auto my-4">
       <Navbar />
       <div className="pb-4 flex flex-col gap-4 md:flex-row">
         <div className="flex flex-col gap-4 w-full  md:w-[35rem]">
-          <Temperature />
+          <DynamicTemperature />
           <FiveDayForecast />
           <div className="hidden md:block lg:hidden">
             <Topcities/>
           </div>
         </div>
         <div className="flex flex-col w-full">
-          <div className="grid h-full gap-x-4 gap-y-3 box-border col-span-full sm:col-span-2 
-          lg:grid-cols-3 xl:grid-cols-4">
+          <div className="min-w-[5rem] h-full gap-x-4 gap-y-3 space-y-3 box-border sm:grid grid-cols-2
+           sm:space-y-0 lg:grid-cols-3 lg:space-y-0 xl:grid-cols-4 xl:space-y-0">
             <AirPollution />
             <Sunset />
             <Wind />

@@ -64,6 +64,6 @@ export const airQulaityIndexText = [
   },
   {
     rating: 100,
-    description: "Die",
+    description: "Hazardous",
   },
 ];

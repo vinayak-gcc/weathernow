@@ -7,7 +7,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "WeatherNow",
-  description: "A weather app built with Next.js and TailwindCSS",
+  description: "A weather app built with Next.js",
+  icons: {
+    icon: '/icon.ico', // /public path
+  },
+
 };
 
 export default function RootLayout({
