@@ -8,21 +8,19 @@ import FeelsLike from "./Components/FeelsLike/FeelsLike";
 import Humidity from "./Components/Humidity/Humidity";
 import Navbar from "./Components/Navbar";
 import Population from "./Components/Population/Population";
+import FiveDayForecast from "./Components/FiveDayForecast/FiveDayForecast";
 import Pressure from "./Components/Pressure/Pressure";
 import Sunset from "./Components/Sunset/Sunset";
 import UvIndex from "./Components/UvIndex/UvIndex";
+import Temperature from "./Components/Temperature/Temperature";
 import Visibility from "./Components/Visibility/Visibility";
 import Wind from "./Components/Wind/Wind";
 import dynamic from "next/dynamic";
-import { lazy } from "react";
 import Topcities from "./utils/Topcities";
 
+<link rel="preload" href="https://api.geoapify.com/"/>;
 <link rel="preload" href="https://www.openstreetmap.org/copyright"/>;
-<link rel="preload" href="https://b.tile.openstreetmap.org"/>
-
-const FiveDayForecast = lazy(() =>  import("./Components/FiveDayForecast/FiveDayForecast"));
-
-const DynamicTemperature = dynamic(()=> import('./Components/Temperature/Temperature'))
+<link rel="preload" href="https://b.tile.openstreetmap.org"/>;
 
 const DynamicMapbox = dynamic(()=>import ('./Components/Mapbox/Mapbox'), 
   {  
@@ -34,10 +32,10 @@ export default function Home() {
 
   return (
     <main className="mx-[1rem] min-w-[14rem] box-border lg:mx-[2rem] overflow-hidden xl:mx-[6rem] 2xl:mx-[16rem] m-auto my-4">
-      <Navbar />
+      <Navbar /> 
       <div className="pb-4 flex flex-col gap-4 md:flex-row">
         <div className="flex flex-col gap-4 w-full  md:w-[35rem]">
-          <DynamicTemperature />
+          <Temperature />
           <FiveDayForecast />
           <div className="hidden md:block lg:hidden">
             <Topcities/>

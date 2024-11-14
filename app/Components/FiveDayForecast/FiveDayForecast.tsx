@@ -11,7 +11,7 @@ function FiveDayForecast() {
   const { city, list } = fiveDayForecast;
 
   if (!fiveDayForecast || !city || !list) {
-    return <Skeleton className="h-[39rem] w-full md:w-[24rem]" />;
+    return <Skeleton className="h-[39rem] w-full md:w-[24rem] lg:mt-5" />;
   }
 
   const processData = (

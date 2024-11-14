@@ -73,7 +73,6 @@ function SearchDialog() {
 
   const getClickedCoords = (lat: number, lon: number) => {
     setActiveCityCoords([lat, lon]);
-
   };
 
   

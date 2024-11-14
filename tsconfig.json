@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/Components/Mapbox/Mapbox.js"
-, "app/Components/NoSsr.js"  ],
+, "app/Components/NoSsr.js", "app/utils/DisplayLocation.js"  ],
   "exclude": ["node_modules"]
 }

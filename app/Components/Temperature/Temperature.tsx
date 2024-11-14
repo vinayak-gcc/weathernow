@@ -74,7 +74,7 @@ function Temperature() {
   }, [timezone]);
 
   if (!weather) {
-    return <Skeleton className="h-[26rem] w-full lg::w-[24rem]"></Skeleton>;
+    return <Skeleton className="h-[26.5rem] w-full lg::w-[24rem]"></Skeleton>;
   }
 
   const { main: weatherMain, description } = weather[0];
