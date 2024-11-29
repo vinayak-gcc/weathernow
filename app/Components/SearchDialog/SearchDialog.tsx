@@ -33,7 +33,7 @@ function SearchDialog() {
     useEffect(() => {
       const debouncedFetch = debounce((search) => {
         fetchGeoCodedList(search);
-      }, 500);
+      }, 300);
   
       if (inputValue) {
         debouncedFetch(inputValue);
@@ -56,11 +56,9 @@ function SearchDialog() {
      useEffect(() => {
 
     const handleKeyDown = (event:KeyboardEvent) => {
-
       if (event.key === '/') {
-        event.preventDefault
-        document.getElementById("Search").focus()
-        document.getElementById("Search").style.width='24rem'
+        setOpen(true)
+        event.preventDefault()
       }
     };
   
@@ -86,7 +84,7 @@ function SearchDialog() {
              hover:bg-slate-100 hover:lg:w-[24rem] ease-in-out duration-200 "
              id="Search"
           >
-            <p className="text-sm  text-muted-foreground "> Click Here or Press ' / + Enter '</p>
+            <p className="text-sm  text-muted-foreground "> Click Here or Press ' / '</p>
           </Button>
         </DialogTrigger>
 
@@ -123,14 +121,13 @@ function SearchDialog() {
                         className={`py-3 px-2 text-sm  rounded-sm cursor-default
                         ${hoveredIndex === index ? "bg-accent" : ""}
                       `}
+                      onClickCapture={(event) => {
+                        wait().then(() => setOpen(false));
+                        event.preventDefault();
+                      }}
                         onClick={() => {
                           getClickedCoords(item.lat, item.lon);
-                        }}
-                        onClickCapture={(event) => {
-                          wait().then(() => setOpen(false));
-                          event.preventDefault();
-                        }}
-                        
+                        }}                      
                       >
                         <p className=" text">
                           {name}, {state && state + ","} {country}

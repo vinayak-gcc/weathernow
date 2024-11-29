@@ -1,22 +1,19 @@
-"use Client";
-
-export const revalidate = 0;
-
 import axios from "axios";
 import React, { useContext, createContext, useState, useEffect} from "react";
 
 const GlobalContext = createContext();
 const GlobalContextUpdate = createContext();
 
-
 export const GlobalContextProvider = ({ children }) => {
+
+  const url = 'https://api.geoapify.com/v1/ipinfo?&apiKey=f9e1b444125a42409c1941f6b2a15d18'
 
   const [activeCityCoords, setActiveCityCoords] = useState([0,0]);
   const [Lat, setLat] = useState(null);
   const [Lon, setLon] = useState(null);
 
   useEffect(() => {
-      fetch('https://api.geoapify.com/v1/ipinfo?&apiKey=f9e1b444125a42409c1941f6b2a15d18')
+        fetch(url)
         .then((response) => response.json())
         .then((data) => {
           if (data.location) {
@@ -38,7 +35,7 @@ export const GlobalContextProvider = ({ children }) => {
   const [forecast, setForecast] = useState({});
   const [airQuality, setAirQuality] = useState({});
   const [fiveDayForecast, setFiveDayForecast] = useState({});
-  const [uvIndex, seUvIndex] = useState({});
+  const [uvIndex, setUvIndex] = useState({});
 
   const fetchForecast = async (lat, lon) => {
     try {
@@ -77,7 +74,7 @@ export const GlobalContextProvider = ({ children }) => {
     try {
       const res = await axios.get(`/api/uv?lat=${lat}&lon=${lon}`);
 
-      seUvIndex(res.data);
+      setUvIndex(res.data);
     } catch (error) {
       console.error("Error fetching the forecast:", error);
     }
@@ -111,7 +108,8 @@ export const GlobalContextProvider = ({ children }) => {
       </GlobalContextUpdate.Provider>
     </GlobalContext.Provider>
   );
-};
+
+  };
 
 export const useGlobalContext = () => useContext(GlobalContext);
 export const useGlobalContextUpdate = () => useContext(GlobalContextUpdate);
