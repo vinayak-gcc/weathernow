@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import axios from "axios";
 import React, { useContext, createContext, useState, useEffect} from "react";
 
