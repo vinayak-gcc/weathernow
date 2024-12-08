@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   icons: {
     icon: '/icon.ico', // /public path
   },
+  verification: {
+    google: 'google',
+  }
 
 };
 
@@ -21,6 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+      <meta name="google-site-verification" content="OrlvMUAuvv9XFQNtK1ca_3iX2-pvO-83iEay0yx08BE" />
+      </head>
       <body className={inter.className} >
         <ThemeProvider
           attribute="class"
