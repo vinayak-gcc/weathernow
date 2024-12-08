@@ -1,3 +1,5 @@
+"use client"
+
 export const revalidate = 0;
 
 import axios from "axios";
