@@ -7,7 +7,8 @@ const GlobalContextUpdate = createContext();
 export const GlobalContextProvider = ({ children }) => {
 
   const url = 'https://api.geoapify.com/v1/ipinfo?&apiKey=f9e1b444125a42409c1941f6b2a15d18';
-  const [activeCityCoords, setActiveCityCoords] = useState([0, 0]);
+  const [activeCityCoords, setActiveCityCoords] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(url)
@@ -19,6 +20,10 @@ export const GlobalContextProvider = ({ children }) => {
       })
       .catch((error) => {
         console.error('Error fetching location data:', error);
+        setActiveCityCoords([51.5074, -0.1278]);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []); 
 
@@ -64,13 +69,15 @@ export const GlobalContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (activeCityCoords[0] !== 0 || activeCityCoords[1] !== 0) {
-      fetchForecast(activeCityCoords[0], activeCityCoords[1]);
-      fetchAirQuality(activeCityCoords[0], activeCityCoords[1]);
-      fetchFiveDayForecast(activeCityCoords[0], activeCityCoords[1]);
-      fetchUvIndex(activeCityCoords[0], activeCityCoords[1]);
+    if (activeCityCoords && !isLoading) {
+      Promise.all([
+        fetchForecast(activeCityCoords[0], activeCityCoords[1]),
+        fetchAirQuality(activeCityCoords[0], activeCityCoords[1]),
+        fetchFiveDayForecast(activeCityCoords[0], activeCityCoords[1]),
+        fetchUvIndex(activeCityCoords[0], activeCityCoords[1])
+      ]);
     }
-  }, [activeCityCoords]);
+  }, [activeCityCoords, isLoading]);
 
   return (
     <GlobalContext.Provider
@@ -80,6 +87,7 @@ export const GlobalContextProvider = ({ children }) => {
         fiveDayForecast,
         uvIndex,
         setActiveCityCoords,
+        isLoading,
       }}
     >
       <GlobalContextUpdate.Provider

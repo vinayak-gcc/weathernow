@@ -21,7 +21,8 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": [
     "next-env.d.ts",
@@ -29,6 +30,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/Components/Mapbox/Mapbox.js"
-, "app/Components/NoSsr.js", "app/utils/DisplayLocation.js", "app/api/location/route.js"  ],
+, "app/Components/NoSsr.js", "app/utils/DisplayLocation.js", "app/api/location/route.js",
+    "types/**/*.d.ts"
+  ],
   "exclude": ["node_modules"]
 }
