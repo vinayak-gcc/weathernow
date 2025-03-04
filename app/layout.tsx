@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./Providers/ThemeProvider";
 import ApolloWrapper from './Providers/ApolloWrapper';
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/next'
 import { PostHogProvider } from './Providers/PostHogProvider';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -40,7 +40,7 @@ export default function RootLayout({
             <ApolloWrapper>
               <PostHogProvider>
                 {children}
-                {process.env.NODE_ENV === 'production' && <Analytics />}
+                <Analytics />
               </PostHogProvider>
             </ApolloWrapper>
         </ThemeProvider>
