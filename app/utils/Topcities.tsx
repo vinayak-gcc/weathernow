@@ -100,7 +100,7 @@ function Topcities() {
   return (
     <div className="flex-1 flex-col gap-3">
       <h2 className="flex items-center gap-2 font-medium">
-        {isLoading ? "Detecting your location..." : citiesData?.nearbyCities ? "Nearby Cities" : "Default Cities"}
+        {isLoading ? "Detecting your location..." : displayCities ? "Nearby Cities" : "Default Cities"}
       </h2>
       <div className="flex mt-3 flex-col gap-4">
         {isLoading ? (

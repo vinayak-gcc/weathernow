@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { gql } from "graphql-tag";
+import axios from 'axios'; // More reliable for serverless environments
 
 // Define GraphQL schema
 const typeDefs = gql`
@@ -44,66 +45,72 @@ const resolvers = {
       }
     ) => {
       try {
-        // OpenWeatherMap API call to find nearby cities
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=${limit}&apikey=584891dc024538f7ace401e33311c3ad`,
-          { cache: "no-store" }
+        // Use environment variable for API key
+        const API_KEY = process.env.OPENWEATHERMAP_API_KEY;
+        
+        if (!API_KEY) {
+          throw new Error('OpenWeatherMap API key is not configured');
+        }
+
+        // Use axios for more reliable request
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/find`, 
+          {
+            params: {
+              lat,
+              lon,
+              cnt: limit,
+              appid: API_KEY
+            },
+            // Disable Axios default caching
+            headers: {
+              'Cache-Control': 'no-cache'
+            }
+          }
         );
 
         console.log("🔍 OpenWeatherMap Response Status:", response.status);
-        if (!response.ok) {
-          throw new Error(`OpenWeatherMap API error: ${response.statusText}`);
-        }
 
-        const data = await response.json();
+        const data = response.data;
         if (!data.list || !data.list.length) return [];
 
-        const uniqueCityNames = new Set<string>();
+        const cities = data.list.map((city: any) => ({
+          name: city.name,
+          lat: city.coord.lat,
+          lon: city.coord.lon,
+          country: city.sys.country,
+          state: '', // OpenWeatherMap doesn't provide state information
+          distance: calculateDistance(lat, lon, city.coord.lat, city.coord.lon),
+        }));
 
-        const cities = data.list
-          .map((city: any) => {
-            return {
-              name: city.name,
-              lat: city.coord.lat,
-              lon: city.coord.lon,
-              country: city.sys.country,
-              state: '', // OpenWeatherMap doesn't provide state information
-              distance: calculateDistance(lat, lon, city.coord.lat, city.coord.lon),
-            };
-          })
-          .filter((city: any) => {
-            if (excludeCity && city.name.toLowerCase() === excludeCity.toLowerCase()) return false;
-            if (city.distance > 900) return false;
-
-            const cityKey = city.name.toLowerCase();
-            if (uniqueCityNames.has(cityKey)) return false;
-
-            uniqueCityNames.add(cityKey);
-            return true;
-          })
-          .sort((a: { distance: number }, b: { distance: number }) => a.distance - b.distance)
-          .slice(0, limit);
-
-        console.log(`✅ Found ${cities.length} unique cities after filtering`);
+        console.log(`✅ Found ${cities.length} unique cities`);
         return cities;
       } catch(error) {
         console.error("❌ Error fetching nearby cities:", error);
+        // More detailed error logging
+        if (axios.isAxiosError(error)) {
+          console.error('Axios Error Details:', {
+            status: error.response?.status,
+            data: error.response?.data
+          });
+        }
         return [];
       }
     },
   },
 };
 
-// ✅ Ensure Apollo Server is started only once
+// Ensure Apollo Server is started only once
 const server = new ApolloServer({ typeDefs, resolvers });
 const handler = startServerAndCreateNextHandler(server, {
   context: async (req) => ({ req }),
 });
 
-// ✅ Named export for Next.js App Router API
+// Named export for Next.js App Router API
 export async function POST(req: Request) {
   return handler(req);
 }
 
-// ✅ Set runtime to Node.js (Required for Vercel)
+// Set runtime to Node.js (Required for Vercel)
 export const runtime = "nodejs";
+export const dynamic = 'force-dynamic'; // Ensure dynamic rendering
