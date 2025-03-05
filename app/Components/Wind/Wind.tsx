@@ -27,19 +27,19 @@ function Wind() {
           <Image
             src="/compass_body.svg"
             alt="compass"
-            width={110}
-            height={110}
+            width={115}
+            height={115}
           />
           <Image
             src="/compass_arrow.svg"
             alt="compass"
-            className="absolute top-0 left-[50%] transition-all -ml-1 duration-500 ease-in-out dark:invert"
+            className="absolute top-0 left-[50%] transition-all  duration-500 ease-in-out dark:invert"
             style={{
               transform: `rotate(${windDir}deg) translateX(-50%)`,
-              height: "100%",
+ 
             }}
             width={11}
-            height={11}
+            height={10}
           />
         </div>
         <p

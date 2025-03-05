@@ -14,9 +14,10 @@ import Wind from "./Components/Wind/Wind";
 import Topcities from "./Wrapper/TopcitiesWrapper";
 import MapboxWrapper from "./Wrapper/MapboxWrapper";
 
-<link rel="preload" href="https://api.geoapify.com/"/>;
+// Preload Links
+{/* <link rel="preload" href="https://api.geoapify.com/"/>;
 <link rel="preload" href="https://www.openstreetmap.org/copyright"/>;
-<link rel="preload" href="https://b.tile.openstreetmap.org"/>;
+<link rel="preload" href="https://b.tile.openstreetmap.org"/>; */}
 
 
 export default function Home() {

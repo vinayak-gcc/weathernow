@@ -69,7 +69,7 @@ const resolvers = {
           }
         );
 
-        console.log("🔍 OpenWeatherMap Response Status:", response.status);
+        // console.log("🔍 OpenWeatherMap Response Status:", response.status);
 
         const data = response.data;
         if (!data.list || !data.list.length) return [];
@@ -83,7 +83,7 @@ const resolvers = {
           distance: calculateDistance(lat, lon, city.coord.lat, city.coord.lon),
         }));
 
-        console.log(`✅ Found ${cities.length} unique cities`);
+        // console.log(`✅ Found ${cities.length} unique cities`);
         return cities;
       } catch(error) {
         console.error("❌ Error fetching nearby cities:", error);

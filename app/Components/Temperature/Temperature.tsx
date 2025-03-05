@@ -9,15 +9,12 @@ import {
   snow,
 } from "@/app/utils/Icons";
 import { kelvinToCelsius } from "@/app/utils/misc";
-import moment, { localeData } from "moment";
+import moment from "moment";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function Temperature() {
   const { forecast } = useGlobalContext();
-
   const { main, timezone, name, weather } = forecast;
-
-
 
   const temp = kelvinToCelsius(main?.temp);
   const minTemp = kelvinToCelsius(main?.temp_min);
@@ -28,10 +25,8 @@ function Temperature() {
   const [currentDate, setCurrentDate] = useState<string>("");
   const [currentDay, setCurrentDay] = useState<string>("");
 
-
-
   const getIcon = () => {
-    switch (weatherMain) {
+    switch (weather?.[0]?.main) {
       case "Drizzle":
         return drizzleIcon;
       case "Rain":
@@ -49,65 +44,60 @@ function Temperature() {
 
   // Live time update
   useEffect(() => {
-
-    // upadte time every second
+    if (!timezone) return;
+    
     const interval = setInterval(() => {
       const localMoment = moment().utcOffset(timezone / 60);
-
-      // custom format: 24 hour format
-      const formatedTime = localMoment.format("HH:mm:ss");
-
-      // Today's Date
+      const formattedTime = localMoment.format("HH:mm:ss");
       const date = localMoment.format("DD-MM-YYYY");
-
-      // day of the week
       const day = localMoment.format("dddd");
 
-      setLocalTime(formatedTime);
+      setLocalTime(formattedTime);
       setCurrentDate(date);
       setCurrentDay(day);
-
     }, 1000);
 
-    // clear interval
     return () => clearInterval(interval);
   }, [timezone]);
 
   if (!weather) {
-    return <Skeleton className="h-[26.5rem] w-full lg::w-[24rem]"></Skeleton>;
+    return <Skeleton className="h-[26.5rem] w-full lg:w-[24rem]" />;
   }
-
-  const { main: weatherMain, description } = weather[0];
 
   return (
     <div
-      className="pt-6 pb-5 px-4 border rounded-lg flex flex-col h-[25.5rem]
-        justify-between dark:bg-dark-grey shadow-sm dark:shadow-none"
+      className="pt-6 pb-5 px-4 border rounded-lg flex flex-col h-[25.5rem] justify-between dark:bg-dark-grey shadow-sm dark:shadow-none"
     >
-      <p className="flex justify-between items-center">
-        <span>{name}</span>
-        <span className="font-medium">{currentDate}</span>
-      </p>
+      <div className="flex justify-between items-center">
+        <span>{name || <Skeleton className="h-5 w-20" />}</span>
+        <span className="font-medium">{currentDate || <Skeleton className="h-5 w-20" />}</span>
+      </div>
 
-      <p className="pt-2 font-bold jus flex justify-between items-center ">
-        <span className="font-medium">{currentDay}</span>
-        <span className="font-medium">{localTime}</span>
-      </p>
+      <div className="pt-2 font-bold flex justify-between items-center">
+        <span className="font-medium">{currentDay || <Skeleton className="h-5 w-20" />}</span>
+        <span className="font-medium">{localTime || <Skeleton className="h-5 w-20" />}</span>
+      </div>
 
-      <p className="py-10 font-bold text-6xl md:text-9xl self-center">{temp}°</p>
+      <div className="py-10 font-bold text-6xl md:text-9xl self-center">
+        {temp !== undefined ? `${temp}°` : <Skeleton className="h-20 w-20" />}
+      </div>
 
       <div>
-
         <div>
           <span>{getIcon()}</span>
-          <p className="pt-2 capitalize text-lg font-medium">{description}</p>
+          <div className="pt-2 capitalize text-lg font-medium">
+            {weather[0]?.description || <Skeleton className="h-5 w-32" />}
+          </div>
         </div>
 
-        <p className="flex items-center gap-2">
-          <span>Low: {minTemp}°</span>
-          <span>High: {maxTemp}°</span>
-        </p>
-
+        <div className="flex items-center gap-2">
+          <span>
+            {minTemp !== undefined ? `Low: ${minTemp}°` : <Skeleton className="h-5 w-20" />}
+          </span>
+          <span>
+            {maxTemp !== undefined ? `High: ${maxTemp}°` : <Skeleton className="h-5 w-20" />}
+          </span>
+        </div>
       </div>
     </div>
   );

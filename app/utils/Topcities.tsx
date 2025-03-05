@@ -27,7 +27,7 @@ function Topcities() {
     fetch('https://api.geoapify.com/v1/ipinfo?&apiKey=f9e1b444125a42409c1941f6b2a15d18')
       .then(response => response.json())
       .then(data => {
-        console.log('Location data:', data); // Debug log
+        // console.log('Location data:', data); // Debug log
         if (data.location) {
           setUserCoords([data.location.latitude, data.location.longitude]);
           setLoading(false); // Add this line to update loading state
@@ -51,15 +51,15 @@ function Topcities() {
       limit: 5
     },
     skip: !userCoords,
-    onCompleted: (data) => {
-      console.log('GraphQL Response:', {
-        hasData: !!data,
-        citiesArray: data?.nearbyCities,
-        numberOfCities: data?.nearbyCities?.length,
-        coordinates: userCoords,
-        requestedLimit: 5
-      });
-    },
+    // onCompleted: (data) => {
+    //   console.log('GraphQL Response:', {
+    //     hasData: !!data,
+    //     citiesArray: data?.nearbyCities,
+    //     numberOfCities: data?.nearbyCities?.length,
+    //     coordinates: userCoords,
+    //     requestedLimit: 5
+    //   });
+    // },
     onError: (error) => {
       console.error('GraphQL query error:', error);
     }
