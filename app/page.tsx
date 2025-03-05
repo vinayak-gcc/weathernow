@@ -1,3 +1,5 @@
+export const revalidate = 0; // Disable caching (always fetch fresh data)
+
 import AirPollution from "./Components/AirPollution/AirPollution";
 import DailyForecast from "./Components/DailyForecast/DailyForecast";
 import FeelsLike from "./Components/FeelsLike/FeelsLike";
@@ -15,9 +17,9 @@ import Topcities from "./Wrapper/TopcitiesWrapper";
 import MapboxWrapper from "./Wrapper/MapboxWrapper";
 
 // Preload Links
-{/* <link rel="preload" href="https://api.geoapify.com/"/>;
+<link rel="preload" href="https://api.geoapify.com/"/>;
 <link rel="preload" href="https://www.openstreetmap.org/copyright"/>;
-<link rel="preload" href="https://b.tile.openstreetmap.org"/>; */}
+<link rel="preload" href="https://b.tile.openstreetmap.org"/>; 
 
 
 export default function Home() {
