@@ -1,7 +1,3 @@
-"use client";
-
-export const revalidate = 0;
-
 import AirPollution from "./Components/AirPollution/AirPollution";
 import DailyForecast from "./Components/DailyForecast/DailyForecast";
 import FeelsLike from "./Components/FeelsLike/FeelsLike";
@@ -15,18 +11,13 @@ import UvIndex from "./Components/UvIndex/UvIndex";
 import Temperature from "./Components/Temperature/Temperature";
 import Visibility from "./Components/Visibility/Visibility";
 import Wind from "./Components/Wind/Wind";
-import dynamic from "next/dynamic";
-import Topcities from "./utils/Topcities";
+import Topcities from "./Wrapper/TopcitiesWrapper";
+import MapboxWrapper from "./Wrapper/MapboxWrapper";
 
 <link rel="preload" href="https://api.geoapify.com/"/>;
 <link rel="preload" href="https://www.openstreetmap.org/copyright"/>;
 <link rel="preload" href="https://b.tile.openstreetmap.org"/>;
 
-const DynamicMapbox = dynamic(()=>import ('./Components/Mapbox/Mapbox'), 
-  {  
-  ssr:false,
-  }
-);
 
 export default function Home() {
 
@@ -59,7 +50,7 @@ export default function Home() {
           <div className="mt-4 grid grid-cols-1 sm-2:grid-cols-2 lg:grid-cols-2 gap-4">    
               
               <div className="flex-1 h-[24rem]">
-                <DynamicMapbox/>
+               <MapboxWrapper />
               </div>
 
               <div className=" mapbox-con block md:hidden lg:block">

@@ -1,8 +1,8 @@
-import { ApolloServer } from '@apollo/server';
-import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { gql } from 'graphql-tag';
+import { ApolloServer } from "@apollo/server";
+import { startServerAndCreateNextHandler } from "@as-integrations/next";
+import { gql } from "graphql-tag";
 
-// Define your GraphQL schema
+// Define GraphQL schema
 const typeDefs = gql`
   type City {
     name: String!
@@ -18,39 +18,61 @@ const typeDefs = gql`
   }
 `;
 
-// Define your resolvers
+// Haversine formula to calculate distances
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c * 10) / 10;
+}
+
+// GraphQL resolvers
 const resolvers = {
   Query: {
-    nearbyCities: async (_: any, { lat, lon, excludeCity, limit = 15 }: { lat: number; lon: number; excludeCity?: string; limit: number }) => {
+    nearbyCities: async (
+      _: any, 
+      { lat, lon, excludeCity, limit = 15 }: { 
+        lat: number; 
+        lon: number; 
+        excludeCity?: string; 
+        limit: number 
+      }
+    ) => {
       try {
+        // OpenWeatherMap API call to find nearby cities
         const response = await fetch(
-          `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&type=city&limit=15&apiKey=f9e1b444125a42409c1941f6b2a15d18`
+          `https://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=${limit}&apikey=584891dc024538f7ace401e33311c3ad`,
+          { cache: "no-store" }
         );
-        const data = await response.json();
 
-        if (!data.features || !data.features.length) return [];
+        console.log("🔍 OpenWeatherMap Response Status:", response.status);
+        if (!response.ok) {
+          throw new Error(`OpenWeatherMap API error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        if (!data.list || !data.list.length) return [];
 
         const uniqueCityNames = new Set<string>();
 
-        const cities = data.features
-          .map((feature: any) => {
-            const cityName = feature.properties.city || feature.properties.name;
-            if (!cityName) return null;
-
+        const cities = data.list
+          .map((city: any) => {
             return {
-              name: cityName,
-              lat: feature.properties.lat,
-              lon: feature.properties.lon,
-              country: feature.properties.country,
-              state: feature.properties.state,
-              distance: calculateDistance(lat, lon, feature.properties.lat, feature.properties.lon),
+              name: city.name,
+              lat: city.coord.lat,
+              lon: city.coord.lon,
+              country: city.sys.country,
+              state: '', // OpenWeatherMap doesn't provide state information
+              distance: calculateDistance(lat, lon, city.coord.lat, city.coord.lon),
             };
           })
           .filter((city: any) => {
-            if (!city) return false;
-            if (excludeCity && city.name.toLowerCase() === excludeCity.toLowerCase()) {
-              return false;
-            }
+            if (excludeCity && city.name.toLowerCase() === excludeCity.toLowerCase()) return false;
             if (city.distance > 900) return false;
 
             const cityKey = city.name.toLowerCase();
@@ -62,36 +84,26 @@ const resolvers = {
           .sort((a: { distance: number }, b: { distance: number }) => a.distance - b.distance)
           .slice(0, limit);
 
-        console.log(`Found ${cities.length} unique cities after filtering`);
+        console.log(`✅ Found ${cities.length} unique cities after filtering`);
         return cities;
-      } catch (error) {
-        console.error('Error fetching nearby cities:', error);
+      } catch(error) {
+        console.error("❌ Error fetching nearby cities:", error);
         return [];
       }
     },
   },
 };
 
-function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const R = 6371; // Earth's radius in km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return Math.round(R * c * 10) / 10;
-}
-
-// Create Apollo Server
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
-
-// Export handler with CORS configuration
+// ✅ Ensure Apollo Server is started only once
+const server = new ApolloServer({ typeDefs, resolvers });
 const handler = startServerAndCreateNextHandler(server, {
   context: async (req) => ({ req }),
 });
 
-export { handler as GET, handler as POST };
+// ✅ Named export for Next.js App Router API
+export async function POST(req: Request) {
+  return handler(req);
+}
+
+// ✅ Set runtime to Node.js (Required for Vercel)
+export const runtime = "nodejs";

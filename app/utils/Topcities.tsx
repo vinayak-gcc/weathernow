@@ -74,7 +74,7 @@ function Topcities() {
   };
 
   // Modify the displayCities logic to respect the limit
-  const displayCities = (citiesData?.nearbyCities?.length > 0)
+  const displayCities = (citiesData?.nearbyCities?.length > 3)
     ? citiesData.nearbyCities.slice(0, 5)
     : defaultStates.slice(0, 5);
 
@@ -112,10 +112,10 @@ function Topcities() {
               className="border rounded-lg cursor-pointer dark:bg-dark-grey shadow-sm dark:shadow-none"
               onClick={() => getClickedCityCords(city.lat, city.lon)}
             >
-              <div className="px-6 py-4">
+              <div className="px-6 py-4 flex">
                 <p className="font-medium">{city.name}</p>
                 {city.distance && (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 ml-4 mt-[0.17rem] ">
                     {city.distance} km away
                     {city.state && ` • ${city.state}`}
                     {city.country && ` • ${city.country}`}
