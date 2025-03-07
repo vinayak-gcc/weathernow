@@ -33,7 +33,7 @@ function SearchDialog() {
     useEffect(() => {
       const debouncedFetch = debounce((search) => {
         fetchGeoCodedList(search);
-      }, 300);
+      }, 150);
   
       if (inputValue) {
         debouncedFetch(inputValue);
