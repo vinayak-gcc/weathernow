@@ -2,7 +2,9 @@
 import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig = {
-  // your existing next config
+
+  // htmlLimitedBots: /.*/g, // Force all user agents to receive blocking metadata
+
   async headers() {
     return [
       {
